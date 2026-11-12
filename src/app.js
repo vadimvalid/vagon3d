@@ -8,6 +8,7 @@ import { syncTrain } from './ui/train.js';
 import { renderScheme, syncSeats, revealSeat, seatButton } from './ui/scheme.js';
 import { renderCard, setCardScene, reportCopy } from './ui/card.js';
 import { syncToggles, setSceneStatus } from './ui/controls.js';
+import { track } from './analytics.js';
 
 /** 3D-сцена подключается позже: она грузится отдельным файлом и может не запуститься вовсе. */
 let scene = null;
@@ -32,6 +33,7 @@ export function select(n, { fly = false } = {}) {
   syncSeats();
   renderCard();
   if (n != null) {
+    track('seat_select', { car_type: state.type, seat: n, source: fly ? 'scheme' : 'model' });
     if (!fly) revealSeat(n); // выбрали на модели: прокручиваем схему к этому месту
     const s = seats.info.get(n);
     announce(`Место ${n}, ${seatLabel(state.type, s)}, ${isBusy(n) ? 'занято' : money(price(state.type, s))}`);
@@ -57,7 +59,7 @@ export function setCar(car, { fromHash = false } = {}) {
   renderScheme();
   renderCard();
   syncTitle();
-  if (!fromHash) writeHash(car, null);
+  if (!fromHash) { writeHash(car, null); track('car_select', { car, car_type: state.type }); }
   savePrefs();
   const total = seats.info.size;
   announce(`Вагон ${car}, ${TYPE_NAME[state.type].toLowerCase()}. Свободно ${total - seats.busy.size} из ${total}`);
@@ -76,6 +78,7 @@ export function setOption(key, value) {
   if (state[key] === value) return;
   setters[key](value);
   syncToggles();
+  track('option_toggle', { option: key, value: String(value) });
   savePrefs();
 }
 export function toggleOption(key) {
@@ -84,6 +87,7 @@ export function toggleOption(key) {
 
 export function compareSelected() {
   state.cmp = state.cmp === state.sel ? null : state.sel;
+  if (state.cmp != null) track('seat_compare', { car_type: state.type });
   syncSeats();
   renderCard();
   announce(state.cmp != null ? `Место ${state.cmp} отложено для сравнения. Выберите второе место` : 'Сравнение отменено');
@@ -100,13 +104,18 @@ export async function copyLink() {
   try {
     await navigator.clipboard.writeText(location.href);
     reportCopy(true);
+    track('share', { method: 'copy_link', content_type: 'seat' });
   } catch {
     reportCopy(false); // нет доступа к буферу (http, file:// или запрет в настройках)
   }
 }
 
-export const setView = name => scene?.setView(name);
-export const seatView = () => { if (state.sel != null) scene?.seatView(state.sel); };
+export const setView = name => { track('camera_view', { view: name }); scene?.setView(name); };
+export const seatView = () => {
+  if (state.sel == null) return;
+  track('seat_view', { car_type: state.type, seat: state.sel });
+  scene?.seatView(state.sel);
+};
 export const orbit = angle => scene?.orbit(angle, 0);
 export const zoom = factor => scene?.zoom(factor);
 export const walk = step => scene?.walk(step);

@@ -41,6 +41,16 @@ npx vercel --prod   # продакшен
 
 На Vercel обычно ничего настраивать не нужно. `SITE_URL` пригодится на другом хостинге (Netlify, Cloudflare Pages, GitHub Pages): задайте её в настройках сборки. Образец в `.env.example`.
 
+### Google Analytics
+
+Счётчик подключается, только если при сборке задана переменная `VITE_GA_ID` (идентификатор потока данных GA4, вида `G-XXXXXXXXXX`). На Vercel: Settings → Environment Variables → `VITE_GA_ID`, затем Redeploy. Локально (`npm run dev`) статистика не собирается.
+
+Скрипт Google грузится после запуска страницы и не мешает 3D-сцене. Код в `src/analytics.js`. Кроме просмотров страницы отправляются события: `car_select`, `seat_select`, `seat_view`, `seat_compare`, `camera_view`, `option_toggle`, `share`, `help_open`. Адреса Google разрешены в Content-Security-Policy в `vercel.json`.
+
+### Google Search Console
+
+Файл подтверждения `public/googlebd83a9a71c38548e.html` попадает в корень сайта при сборке. После деплоя нажмите «Подтвердить» в Search Console.
+
 ### После первого деплоя
 
 - Откройте `/robots.txt`, `/sitemap.xml` и `/llms.txt` и убедитесь, что в них настоящий домен, а не localhost.

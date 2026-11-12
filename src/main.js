@@ -8,6 +8,7 @@ import { initCard, renderCard } from './ui/card.js';
 import { initControls, showWalk, showTip } from './ui/controls.js';
 import { initHelp, helpIsOpen } from './ui/help.js';
 import { afterNextPaint } from './util/schedule.js';
+import { initAnalytics, track } from './analytics.js';
 
 // Загрузку сцены начинаем первой строкой, чтобы файл качался, пока строится интерфейс.
 const sceneModule = import('./scene/index.js');
@@ -17,6 +18,8 @@ initScheme({ onPick: n => app.select(n, { fly: true }), onHover: app.setHover })
 initCard({ onView: app.seatView, onCompare: app.compareSelected, onClear: app.clearSelected, onCopy: app.copyLink });
 initControls({ onView: app.setView, onToggle: app.toggleOption, onOrbit: app.orbit, onZoom: app.zoom, onWalk: app.walk });
 initHelp();
+initAnalytics();
+$('helpOpen').addEventListener('click', () => track('help_open'));
 
 syncTrain(state.car);
 renderScheme();
