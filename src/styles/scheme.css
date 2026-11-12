@@ -1,0 +1,173 @@
+@layer components {
+  /* ---- схема мест ---- */
+  .dock {
+    min-inline-size: 0;
+    padding-block: 0.5rem max(0.5rem, var(--safe-bottom));
+    background: var(--livery);
+    color: var(--livery-ink);
+    border-block-start: 4px solid var(--stripe);
+  }
+  .dock-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.25rem 1.125rem;
+    padding-block-end: 0.25rem;
+    padding-left: max(var(--pad), var(--safe-left));
+    padding-right: max(var(--pad), var(--safe-right));
+    font-size: 0.875rem;
+    & h2 {
+      margin: 0;
+      font: 700 1rem/1.2 var(--sans);
+    }
+  }
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 1.125rem;
+    margin: 0 0 0 auto;
+    padding: 0;
+    list-style: none;
+    color: var(--livery-muted);
+    & li {
+      display: flex;
+      align-items: center;
+      gap: 0.375rem;
+    }
+  }
+  .sw {
+    flex: none;
+    inline-size: 1rem;
+    block-size: 0.875rem;
+    border: 1.5px solid var(--plate);
+    border-radius: 3px;
+    &.low { background: var(--plate); }
+    &.busy {
+      display: grid;
+      place-items: center;
+      border-style: dashed;
+      border-color: var(--livery-muted);
+      font: 700 0.6875rem/1 var(--narrow);
+      text-decoration: line-through;
+    }
+    &.dash {
+      block-size: 0;
+      border: 0;
+      border-block-start: 2px dashed var(--livery-muted);
+      border-radius: 0;
+    }
+  }
+  .free {
+    margin: 0;
+    color: var(--livery-muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .scroll {
+    overflow-x: auto;
+    padding-block: 0.25rem 0.375rem;
+    padding-left: max(var(--pad), var(--safe-left));
+    padding-right: max(var(--pad), var(--safe-right));
+    scrollbar-width: thin;
+    scrollbar-color: var(--livery-muted) transparent;
+  }
+  .scheme {
+    display: flex;
+    align-items: stretch;
+    gap: 0.375rem;
+    inline-size: max-content;
+    margin-inline: auto;
+  }
+  .cap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: 5rem;
+    padding: 0.25rem;
+    border: 1px dashed var(--livery-muted);
+    border-radius: var(--radius);
+    color: var(--livery-muted);
+    font-size: 0.75rem;
+    line-height: 1.25;
+    text-align: center;
+    overflow-wrap: normal;
+  }
+  .bay {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1875rem;
+    padding: 0.1875rem 0.25rem 0.25rem;
+    border-radius: var(--radius);
+    background: var(--livery-deep);
+  }
+  .bay-n {
+    color: var(--livery-muted);
+    font-size: 0.75rem;
+    line-height: 1.2;
+    text-align: center;
+  }
+  .row {
+    display: flex;
+    gap: 0.1875rem;
+  }
+  .aisle {
+    block-size: 0;
+    margin-block: 0.25rem;
+    border-block-start: 2px dashed var(--livery-muted);
+    opacity: 0.7;
+  }
+
+  .seat {
+    min-inline-size: var(--seat-w);
+    min-block-size: var(--seat-h);
+    padding: 0;
+    border: 1.5px solid var(--plate);
+    border-radius: 0.3125rem;
+    font: 700 1rem/1 var(--narrow);
+    font-variant-numeric: tabular-nums;
+    transition: box-shadow 0.1s;
+    &.low {
+      background: var(--plate);
+      color: var(--plate-ink);
+    }
+    &.up {
+      background: transparent;
+      color: var(--livery-ink);
+    }
+    /* Занятое место: зачёркнутый номер и приглушённый вид, а не один только цвет. */
+    &.busy {
+      text-decoration: line-through;
+      text-decoration-thickness: 2px;
+    }
+    &.busy.low {
+      background: var(--busy);
+      border-color: var(--busy);
+    }
+    &.busy.up {
+      border-style: dashed;
+      border-color: var(--livery-muted);
+      color: var(--livery-muted);
+    }
+    /* Отложено для сравнения */
+    &.cmp {
+      outline: 2px dashed var(--plate);
+      outline-offset: 1px;
+    }
+    &.hot { box-shadow: 0 0 0 2px var(--stripe); }
+    @media (hover: hover) {
+      &:hover { box-shadow: 0 0 0 2px var(--stripe); }
+    }
+    &[aria-pressed="true"] {
+      background: var(--stripe);
+      border-color: var(--stripe);
+      border-style: solid;
+      color: var(--stripe-ink);
+      box-shadow: 0 0 0 2px var(--livery-deep), 0 0 0 4px var(--stripe);
+    }
+    &:focus-visible {
+      outline: 2px solid var(--plate);
+      outline-offset: 2px;
+      box-shadow: 0 0 0 2px var(--livery-deep);
+    }
+  }
+}

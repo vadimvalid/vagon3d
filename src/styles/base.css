@@ -1,0 +1,40 @@
+@layer base {
+  :where(html, body, header, main, section, div, p, span, ul, li, dl, a, button, canvas, dialog, table) {
+    box-sizing: border-box;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    scrollbar-color: var(--edge) transparent;
+  }
+
+  body {
+    margin: 0;
+    min-block-size: 100vh;
+    min-block-size: 100dvh; /* учитывает адресную строку мобильного браузера */
+    background: var(--stage);
+    color: var(--ink);
+    font: 1rem/1.4 var(--sans);
+    /* У PT Sans высота строчных ровно половина кегля. Запасной шрифт подгоняется под неё,
+       и текст не прыгает, когда догружается веб-шрифт. */
+    font-size-adjust: 0.5;
+    overflow-wrap: anywhere;
+  }
+
+  button {
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+    touch-action: manipulation;
+  }
+
+  :where(h1, h2, h3) { text-wrap: balance; }
+
+  :focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+  }
+
+  [hidden] { display: none !important; }
+}

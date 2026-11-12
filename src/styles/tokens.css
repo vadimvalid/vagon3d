@@ -1,0 +1,71 @@
+@layer tokens {
+  :root {
+    /* Нативные элементы (полосы прокрутки, диалог) подстраиваются под тему системы. */
+    color-scheme: light dark;
+
+    /* Поверхности сцены и карточек */
+    --stage: #d6e0d7;
+    --sky: #eef4f2;
+    --card: #f7f9f5;
+    --ink: #14221b;
+    --muted: #4a5a51;
+    --line: #b4c0b6;       /* декоративные разделители */
+    --edge: #74847a;       /* границы кнопок: контраст с фоном не ниже 3:1 */
+
+    /* «Борт вагона»: шапка, состав, схема */
+    --livery: #234d3d;
+    --livery-deep: #1a3b2f;
+    --livery-ink: #f1f4ec;
+    --livery-muted: #c3d3c8;
+    --stripe: #f0c330;
+    --stripe-ink: #14221b;
+    --plate: #f4f6f0;
+    --plate-ink: #14221b;
+    --plate-muted: #4a5a51;
+    --busy: #9db1a5;
+
+    /* Ночной режим сцены не зависит от темы */
+    --night-top: #0a1119;
+    --night-bottom: #131c18;
+    --night-muted: #a3b5a9;
+
+    --focus: var(--stripe);
+    --backdrop: rgb(8 16 12 / 0.62);
+
+    --sans: "PT Sans", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    --narrow: "PT Sans Narrow", "Arial Narrow", "Roboto Condensed", Arial, sans-serif;
+
+    --radius: 0.375rem;
+    --radius-lg: 0.625rem;
+    --pad: 1rem;                  /* поля по бокам полос */
+    --tap: 2.25rem;               /* минимальный размер кнопки */
+    --seat-w: 2.25rem;
+    --seat-h: 2rem;
+    --stage-min: 15rem;           /* ниже этой высоты страница начинает прокручиваться */
+
+    /* Вырезы и скруглённые углы экрана */
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-right: env(safe-area-inset-right, 0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+    --safe-left: env(safe-area-inset-left, 0px);
+
+    @media (prefers-color-scheme: dark) {
+      --stage: #0c1511;
+      --sky: #182a22;
+      --card: #17241d;
+      --ink: #e8eee8;
+      --muted: #a3b5a9;
+      --line: #30433a;
+      --edge: #6f8478;
+      --livery: #1c3d31;
+      --livery-deep: #142d24;
+    }
+
+    /* Палец крупнее курсора */
+    @media (pointer: coarse) {
+      --tap: 2.75rem;
+      --seat-w: 2.75rem;
+      --seat-h: 2.5rem;
+    }
+  }
+}

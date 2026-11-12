@@ -1,0 +1,98 @@
+@layer overrides {
+  /* Скрыто визуально, но доступно программам экранного доступа. */
+  .vh {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  .sprite {
+    position: absolute;
+    inline-size: 0;
+    block-size: 0;
+    overflow: hidden;
+  }
+
+  /* Ссылка «к схеме» появляется при первом нажатии Tab. */
+  .skip {
+    position: absolute;
+    z-index: 10;
+    inset-block-start: max(0.5rem, var(--safe-top));
+    left: max(0.5rem, var(--safe-left));
+    padding: 0.5rem 0.875rem;
+    border-radius: var(--radius);
+    background: var(--plate);
+    color: var(--plate-ink);
+    font-weight: 700;
+    translate: 0 -300%;
+    &:focus { translate: 0 0; }
+    &:focus-visible {
+      outline: 3px solid var(--stripe);
+      outline-offset: 2px;
+    }
+  }
+
+  .noscript, .nf {
+    margin: 0;
+    padding: 1.5rem;
+    text-align: center;
+  }
+  .nf {
+    display: grid;
+    place-content: center;
+    gap: 0.75rem;
+    & h1 { margin: 0; font: 700 2rem/1.1 var(--narrow); }
+    & p { margin: 0; color: var(--muted); }
+    & a { color: inherit; font-weight: 700; }
+  }
+
+  /* Пользователь просит больше контраста: приглушённый текст и границы становятся основным цветом. */
+  @media (prefers-contrast: more) {
+    :root {
+      --muted: var(--ink);
+      --line: var(--ink);
+      --edge: var(--ink);
+      --livery-muted: var(--livery-ink);
+      --plate-muted: var(--plate-ink);
+    }
+    .aisle { opacity: 1; }
+  }
+
+  /* Режим принудительных цветов (высокая контрастность Windows): фон и тени пропадают,
+     поэтому состояния показываем системными цветами и рамками. */
+  @media (forced-colors: active) {
+    .stage { background: Canvas; }
+    .car[aria-pressed="true"],
+    .seat[aria-pressed="true"] {
+      forced-color-adjust: none;
+      background: Highlight;
+      border-color: Highlight;
+      color: HighlightText;
+      & i { color: HighlightText; }
+    }
+    .tog[aria-pressed="true"]::before {
+      forced-color-adjust: none;
+      background: Highlight;
+      border-color: Highlight;
+    }
+    .seat.low { border-width: 3px; }
+    .seat.hot { outline: 2px solid Highlight; outline-offset: 1px; }
+    .seat.cmp { outline: 2px dashed CanvasText; }
+    .sw.low {
+      forced-color-adjust: none;
+      background: CanvasText;
+      border-color: CanvasText;
+    }
+    .plate, .busy-tag { border: 1px solid CanvasText; }
+    .tip, .copy-tip { border-color: CanvasText; }
+    .loco::before {
+      forced-color-adjust: none;
+      background: GrayText;
+    }
+  }
+}

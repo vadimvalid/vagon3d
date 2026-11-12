@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>Вагон 3D: схема мест в плацкарте, купе, СВ и сидячем вагоне</title>
+<meta name="description" content="Интерактивная 3D-модель пассажирского вагона. Посмотрите, где находится место, как выглядит вид с полки и чем нижнее отличается от верхнего и бокового: плацкарт, купе, СВ и сидячий вагон.">
+<link rel="canonical" href="%SITE_URL%/">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#234d3d" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1c3d31" media="(prefers-color-scheme: dark)">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Вагон 3D">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:url" content="%SITE_URL%/">
+<meta property="og:title" content="Вагон 3D: схема мест в плацкарте, купе, СВ и сидячем вагоне">
+<meta property="og:description" content="Интерактивная 3D-модель пассажирского вагона: расположение мест, вид с полки, сравнение двух мест.">
+<meta property="og:image" content="%SITE_URL%/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Плацкартный вагон в разрезе: полки с номерами мест и схема мест под ним">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+
+<link rel="preload" href="/src/assets/fonts/pt-sans-cyrillic-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/src/assets/fonts/pt-sans-narrow-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/src/styles/main.css">
+<script type="module" src="/src/main.js"></script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "@id": "%SITE_URL%/#app",
+      "name": "Вагон 3D",
+      "url": "%SITE_URL%/",
+      "description": "Интерактивная 3D-модель пассажирского вагона со схемой мест: плацкартный, купейный, СВ и сидячий вагон. Показывает расположение мест, вид с места и сравнение двух мест.",
+      "inLanguage": "ru",
+      "applicationCategory": "TravelApplication",
+      "operatingSystem": "Any",
+      "browserRequirements": "Нужен браузер с поддержкой WebGL 2 и JavaScript",
+      "isAccessibleForFree": true,
+      "image": "%SITE_URL%/og-image.png",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "RUB" },
+      "featureList": [
+        "3D-модель вагона с вращением и масштабом",
+        "Схема мест плацкартного, купейного, СВ и сидячего вагона",
+        "Вид с выбранного места",
+        "Сравнение двух мест",
+        "Размеры полок и проходов",
+        "Ссылка на конкретное место"
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "%SITE_URL%/#faq",
+      "inLanguage": "ru",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Какие места в плацкартном вагоне боковые?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Боковые места в плацкартном вагоне на 54 места имеют номера с 37 по 54. Они расположены вдоль прохода, напротив отсеков. Нечётные боковые места нижние, чётные верхние. Нумерация идёт с конца вагона: места 53 и 54 находятся у первого отсека рядом с купе проводника, места 37 и 38 у девятого отсека рядом с туалетом." }
+        },
+        {
+          "@type": "Question",
+          "name": "Какие места нижние, а какие верхние?",
+          "acceptedAnswer": { "@type": "Answer", "text": "В плацкартном и купейном вагоне нечётные места нижние, чётные верхние. В вагоне СВ все места нижние, верхних полок нет." }
+        },
+        {
+          "@type": "Question",
+          "name": "Сколько мест в вагонах разных типов?",
+          "acceptedAnswer": { "@type": "Answer", "text": "В модели плацкартный вагон рассчитан на 54 места (9 отсеков по 4 места и 18 боковых), купейный на 36 мест (9 купе по 4), СВ на 18 мест (9 купе по 2), сидячий на 72 места (18 рядов по 4 кресла)." }
+        },
+        {
+          "@type": "Question",
+          "name": "Какие места находятся рядом с туалетом?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Туалеты есть в обоих концах вагона. Со стороны девятого отсека туалет сразу за перегородкой: в плацкартном вагоне это места с 33 по 36 и боковые 37 и 38, в купейном места с 33 по 36, в СВ места 17 и 18. С другой стороны между первым отсеком и туалетом находится купе проводника." }
+        },
+        {
+          "@type": "Question",
+          "name": "Настоящие ли цены и занятость мест?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Нет. Цены, занятость мест и состав поезда в приложении условные и нужны для демонстрации. Они не связаны ни с одним перевозчиком. Размеры близки к реальным, но это не чертёж конкретной модели вагона." }
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#schemeTitle">Перейти к схеме мест</a>
+
+<svg class="sprite" aria-hidden="true" focusable="false">
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24"><path d="M4 11a8 8 0 1 1 2.3 6.6M4 5v6h6"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-2.3 6.6M20 5v6h-6"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 12h3M11 12h9M4 17h12M20 17h0"/><circle cx="16" cy="7" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="18" cy="17" r="2"/></symbol>
+</svg>
+
+<header class="top">
+  <div class="bar">
+    <div class="bar-in">
+      <h1 class="brand">Вагон 3D</h1>
+      <button type="button" class="help-btn" id="helpOpen" aria-haspopup="dialog">Справка</button>
+      <div class="tools" id="tools" role="toolbar" focusgroup="toolbar wrap" aria-label="Вид модели" aria-controls="scene">
+        <div class="ctl" role="group" aria-labelledby="lblCam">
+          <span class="lbl" id="lblCam">Камера</span>
+          <div class="seg" id="views">
+            <button type="button" data-view="out">Снаружи</button>
+            <button type="button" data-view="cut">В разрезе</button>
+            <button type="button" data-view="top">Сверху</button>
+            <button type="button" data-view="in">Из прохода</button>
+          </div>
+        </div>
+        <button type="button" class="icon-btn opts-btn" id="optsBtn" aria-expanded="false" aria-controls="opts">
+          <svg aria-hidden="true" focusable="false"><use href="#i-layers"/></svg>
+          <span class="opts-label">Отображение</span>
+        </button>
+        <div class="opts" id="opts" role="group" aria-label="Отображение">
+          <button type="button" class="tog" id="tShell" aria-pressed="false">Крыша и стены</button>
+          <button type="button" class="tog" id="tUpper" aria-pressed="true">Верхние полки</button>
+          <button type="button" class="tog" id="tShadow" aria-pressed="true">Тени</button>
+          <button type="button" class="tog" id="tDims" aria-pressed="false">Размеры</button>
+          <button type="button" class="tog" id="tNight" aria-pressed="false">Ночь</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="train">
+    <div class="train-in">
+      <span class="loco">Локомотив</span>
+      <div class="cars" id="train" role="toolbar" focusgroup="toolbar wrap" aria-label="Вагон состава"></div>
+    </div>
+  </div>
+</header>
+
+<main class="main">
+  <section class="stage" id="stage" aria-labelledby="stageTitle">
+    <h2 class="vh" id="stageTitle">Модель вагона</h2>
+    <canvas class="scene" id="scene" role="application" tabindex="0" aria-label="Трёхмерная модель вагона" aria-describedby="hint keys"></canvas>
+    <p class="stage-msg" id="sceneMsg">Загружаю 3D-модель…</p>
+    <p class="hint" id="hint">Тяните, чтобы вращать. Колесо или щипок меняют масштаб, правая кнопка сдвигает.</p>
+    <p class="vh" id="keys">С клавиатуры: стрелки вращают камеру, плюс и минус меняют масштаб.</p>
+
+    <div class="stage-top">
+      <div class="walk" id="walk" role="group" aria-label="Прогулка по проходу" hidden>
+        <button type="button" id="wBack" aria-label="Назад по проходу">Назад</button>
+        <span id="wPos"></span>
+        <button type="button" id="wFwd" aria-label="Вперёд по проходу">Вперёд</button>
+      </div>
+      <div class="nav" id="nav" role="group" aria-label="Поворот и масштаб" hidden>
+        <button type="button" class="icon-btn" data-nav="left" aria-label="Повернуть влево"><svg aria-hidden="true" focusable="false"><use href="#i-left"/></svg></button>
+        <button type="button" class="icon-btn" data-nav="right" aria-label="Повернуть вправо"><svg aria-hidden="true" focusable="false"><use href="#i-right"/></svg></button>
+        <button type="button" class="icon-btn" data-nav="out" aria-label="Отдалить"><svg aria-hidden="true" focusable="false"><use href="#i-minus"/></svg></button>
+        <button type="button" class="icon-btn" data-nav="in" aria-label="Приблизить"><svg aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></button>
+      </div>
+    </div>
+
+    <section class="card" id="card" aria-label="Выбранное место">
+      <p class="card-empty" id="cardEmpty">Выберите место на схеме внизу или прямо в вагоне.</p>
+      <div class="card-body" id="cardBody" hidden>
+        <div class="card-top">
+          <span class="plate" id="cardPlate" aria-hidden="true"></span>
+          <div class="card-id">
+            <h3 id="cardTitle"></h3>
+            <p id="cardKind"></p>
+          </div>
+          <button type="button" class="icon-btn card-close" id="cardClear" aria-label="Снять выбор">
+            <svg aria-hidden="true" focusable="false"><use href="#i-close"/></svg>
+          </button>
+        </div>
+        <div class="card-meta">
+          <p class="price"><span id="cardPrice"></span> <span class="price-unit" id="cardUnit"></span></p>
+          <p class="busy-tag" id="cardBusy" hidden>Место занято</p>
+          <button type="button" class="more-btn" id="cardMoreBtn" aria-expanded="false" aria-controls="cardMore">Подробности</button>
+        </div>
+        <div class="card-more" id="cardMore">
+          <ul id="cardNotes"></ul>
+          <div id="cardCmp"></div>
+        </div>
+        <div class="acts">
+          <button type="button" class="primary" id="cardView" hidden>Вид с места</button>
+          <button type="button" id="cardCompare">Сравнить</button>
+          <span class="copy">
+            <button type="button" id="cardCopy">Ссылка</button>
+            <span class="copy-tip" id="copyTip" role="status"></span>
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <div class="tip" id="tip" aria-hidden="true" hidden></div>
+  </section>
+
+  <section class="dock" aria-labelledby="schemeTitle">
+    <div class="dock-head">
+      <h2 id="schemeTitle" tabindex="-1">Схема мест</h2>
+      <p class="free" id="free"></p>
+      <ul class="legend" role="list" aria-label="Обозначения">
+        <li><span class="sw low" aria-hidden="true"></span><span id="legLow">нижнее</span></li>
+        <li><span class="sw" aria-hidden="true"></span><span id="legUp">верхнее</span></li>
+        <li><span class="sw busy" aria-hidden="true">8</span>занято</li>
+        <li><span class="sw dash" aria-hidden="true"></span><span id="legAisle">проход, под ним боковые</span></li>
+      </ul>
+    </div>
+    <div class="scroll">
+      <div class="scheme" id="scheme" role="group" aria-label="Места вагона" aria-describedby="schemeKeys"></div>
+    </div>
+    <p class="vh" id="schemeKeys">Стрелки переводят фокус между местами.</p>
+  </section>
+</main>
+
+<dialog class="help" id="help" aria-labelledby="helpTitle" closedby="any">
+  <div class="help-head">
+    <h2 id="helpTitle">О приложении «Вагон 3D»</h2>
+    <button type="button" class="icon-btn" id="helpClose" aria-label="Закрыть справку">
+      <svg aria-hidden="true" focusable="false"><use href="#i-close"/></svg>
+    </button>
+  </div>
+  <div class="help-body">
+    <p>«Вагон 3D» показывает пассажирский вагон поезда дальнего следования в объёме. Можно выбрать место на схеме или прямо на модели, посмотреть вид с полки и сравнить два места перед покупкой билета.</p>
+
+    <h3>Типы вагонов</h3>
+    <table>
+      <thead>
+        <tr><th scope="col">Вагон</th><th scope="col">Мест</th><th scope="col">Как устроен</th></tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">Плацкартный</th><td>54</td><td>9 отсеков по 4 места и 18 боковых мест вдоль прохода</td></tr>
+        <tr><th scope="row">Купейный</th><td>36</td><td>9 закрытых купе по 4 места</td></tr>
+        <tr><th scope="row">СВ</th><td>18</td><td>9 купе по 2 места, верхних полок нет</td></tr>
+        <tr><th scope="row">Сидячий</th><td>72</td><td>18 рядов по 4 кресла, по два с каждой стороны прохода</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Как нумеруются места</h3>
+    <ul>
+      <li>В плацкартном и купейном вагоне нечётные места нижние, чётные верхние.</li>
+      <li>Боковые места плацкарта имеют номера с 37 по 54. Счёт идёт с конца вагона: 53 и 54 у купе проводника, 37 и 38 у туалета.</li>
+      <li>В сидячем вагоне в каждом ряду крайние кресла стоят у окна, средние у прохода.</li>
+    </ul>
+
+    <h3>Управление</h3>
+    <dl class="keys">
+      <dt>Мышь</dt>
+      <dd>Тяните, чтобы вращать модель. Колесо меняет масштаб, правая кнопка сдвигает. Клик по полке выбирает место.</dd>
+      <dt>Сенсорный экран</dt>
+      <dd>Ведите одним пальцем, чтобы вращать. Щипок меняет масштаб, два пальца сдвигают. Касание полки выбирает место.</dd>
+      <dt>Клавиатура</dt>
+      <dd>Когда фокус на модели, стрелки вращают камеру, <kbd>+</kbd> и <kbd>−</kbd> меняют масштаб. На схеме мест, в составе и на панели вида стрелки переводят фокус между кнопками. <kbd>Esc</kbd> снимает выбор места.</dd>
+      <dt>Кнопки на модели</dt>
+      <dd>Поворот и масштаб доступны и без перетаскивания: кнопки в углу модели делают то же самое.</dd>
+    </dl>
+
+    <h3>Частые вопросы</h3>
+    <dl class="faq">
+      <dt>Какие места в плацкартном вагоне боковые?</dt>
+      <dd>Боковые места в плацкартном вагоне на 54 места имеют номера с 37 по 54. Они расположены вдоль прохода, напротив отсеков. Нечётные боковые места нижние, чётные верхние. Нумерация идёт с конца вагона: места 53 и 54 находятся у первого отсека рядом с купе проводника, места 37 и 38 у девятого отсека рядом с туалетом.</dd>
+      <dt>Какие места нижние, а какие верхние?</dt>
+      <dd>В плацкартном и купейном вагоне нечётные места нижние, чётные верхние. В вагоне СВ все места нижние, верхних полок нет.</dd>
+      <dt>Сколько мест в вагонах разных типов?</dt>
+      <dd>В модели плацкартный вагон рассчитан на 54 места (9 отсеков по 4 места и 18 боковых), купейный на 36 мест (9 купе по 4), СВ на 18 мест (9 купе по 2), сидячий на 72 места (18 рядов по 4 кресла).</dd>
+      <dt>Какие места находятся рядом с туалетом?</dt>
+      <dd>Туалеты есть в обоих концах вагона. Со стороны девятого отсека туалет сразу за перегородкой: в плацкартном вагоне это места с 33 по 36 и боковые 37 и 38, в купейном места с 33 по 36, в СВ места 17 и 18. С другой стороны между первым отсеком и туалетом находится купе проводника.</dd>
+      <dt>Настоящие ли цены и занятость мест?</dt>
+      <dd>Нет. Цены, занятость мест и состав поезда в приложении условные и нужны для демонстрации. Они не связаны ни с одним перевозчиком. Размеры близки к реальным, но это не чертёж конкретной модели вагона.</dd>
+    </dl>
+  </div>
+</dialog>
+
+<p class="vh" id="live" role="status"></p>
+
+<noscript>
+  <p class="noscript">Для 3D-модели и схемы мест нужен JavaScript. Включите его в настройках браузера и обновите страницу.</p>
+</noscript>
+</body>
+</html>

@@ -1,0 +1,12 @@
+/* Порядок слоёв задаёт приоритет: более поздний слой побеждает независимо от специфичности. */
+@layer tokens, base, layout, components, overrides;
+
+/* Vite склеивает импорты в один файл при сборке, цепочки запросов в продакшене не будет. */
+@import "./fonts.css";
+@import "./tokens.css";
+@import "./base.css";
+@import "./layout.css";
+@import "./stage.css";
+@import "./scheme.css";
+@import "./help.css";
+@import "./overrides.css";
